@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+// expected base-route: /api/genres
 
 var genres = [
     {id: 1, genre: 'horror'},
