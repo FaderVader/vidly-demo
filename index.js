@@ -5,6 +5,7 @@ const app = express();
 const genres = require('./routes/genres');
 const home = require('./routes/home');
 
+// declare and instantiate helper-apps
 const Joi = require('joi');
 const config = require('config');
 const helmet = require('helmet');
@@ -30,7 +31,7 @@ app.use(log);
 app.use(auth);
 
 // attach routes
-app.use('/api/genres', genres);
+app.use('/api/genres', genres);  // all requests to [baseurl]/api/genres will be handled by genres.js 
 app.use('/', home);
 
 // Config

@@ -1,13 +1,18 @@
+const Joi = require('joi');
+const Database = require('../persistance/database');
+const database = new Database();
+
 const express = require('express');
 const router = express.Router();
 // expected base-route: /api/genres
 
-var genres = [
-    {id: 1, genre: 'horror'},
-    {id: 2, genre: 'sci-fi'},
-    {id: 3, genre: 'documentary'},
-    {id: 4, genre: 'comedy'},
-];
+// hardcoded genres
+// var genres = [
+//     {id: 1, genre: 'horror'},
+//     {id: 2, genre: 'sci-fi'},
+//     {id: 3, genre: 'documentary'},
+//     {id: 4, genre: 'comedy'},
+// ];
 
 // READ / GET
 router.get('/', (request, response) => { 
