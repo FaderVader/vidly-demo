@@ -1,8 +1,16 @@
 const express = require('express');
 const app = express();
 
+// connect to database
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/vidly')
+.then( () => console.log('Connection succesfully established.'))
+.catch( err => console.error(err.message));
+
 // declare and instantiate routes 
 const genres = require('./routes/genres');
+const customers = require('./routes/customers');
+const movies = require('./routes/movies');
 const home = require('./routes/home');
 
 // declare and instantiate helper-apps
@@ -32,6 +40,8 @@ app.use(auth);
 
 // attach routes
 app.use('/api/genres', genres);  // all requests to [baseurl]/api/genres will be handled by genres.js 
+app.use('/api/customers', customers);
+app.use('/api/movies', movies);
 app.use('/', home);
 
 // Config

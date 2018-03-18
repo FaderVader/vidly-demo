@@ -1,12 +1,8 @@
 const mongoose = require('mongoose').set('debug', true);
 
-
-
 mongoose.connect('mongodb://localhost/vidly')
 .then( () => console.log('Connection succesfully established.'))
 .catch( err => console.error(err.message));
-
-
 
 const genreSchema = new mongoose.Schema({
     genreName: String,
@@ -54,11 +50,11 @@ async function runOperation() {
 
 };
 
-class Database {
+
 
 
 // create genre
-async createGenre(genrename, genreTags){
+async function createGenre(genrename, genreTags){
     var recordCount = await getGenreCount();
     var newGenreId = recordCount+1;
     console.log('recordCount:', recordCount);
@@ -74,7 +70,7 @@ async createGenre(genrename, genreTags){
 };
 
 // get number of records in DB
-async getGenreCount() {
+async function getGenreCount() {
     const count = await Genre
         .find()
         .count();
@@ -82,13 +78,13 @@ async getGenreCount() {
 };
 
 // list genres
-async getGenres() {
+async function getGenres() {
     return await Genre
     .find();
 };
 
 // find genre
-async findGenre(search) {    
+async function findGenre(search) {    
     const searchRegExp = new RegExp('.*' + search + '.*', "i");
 
     const foundGenre = await Genre
@@ -113,7 +109,7 @@ async findGenre(search) {
 // };
 
 // update genre - trying to get a returned result via promise
-async updateGenre(genreId, newGenreName) {
+async function updateGenre(genreId, newGenreName) {
     const genreFound = await Genre.findOne({ genreId: genreId });
 
     if (genreFound) {
@@ -139,7 +135,7 @@ async updateGenre(genreId, newGenreName) {
 };
 
 // delete genres
-async deleteGenre(genreIdToDelete) {
+async function deleteGenre(genreIdToDelete) {
     const foundGenre = await Genre
     .findOne({genreId: genreIdToDelete});
 
@@ -154,9 +150,3 @@ async deleteGenre(genreIdToDelete) {
         reject(new Error('No entry found at: ' + genreIdToDelete));
     });
 };
- 
-}
-module.exports = Database;
-
-
-
