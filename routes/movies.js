@@ -67,7 +67,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE
-router.delete('/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const result = Movie.findByIdAndRemove(req.params.id);
     if (!result) return res.status(404).send('Movie not found');
 

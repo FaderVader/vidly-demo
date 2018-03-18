@@ -1,10 +1,10 @@
-// import { Genre } from './genre';
 const {Genre} = require('./genre');
 
 const mongoose = require('mongoose');
 const Joi = require('joi');
 const {genreSchema} = require('./genre');
 
+// validate the document
 const movieSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -21,13 +21,14 @@ const movieSchema = new mongoose.Schema({
         required: true
     },
     genre: {
-        type: genreSchema, //genreSchema  //mongoose.Schema.Types.ObjectId
+        type: genreSchema, 
         required: true
     }
 });
 
 const Movie = mongoose.model('Movie', movieSchema);
 
+// validate the content of the request
 function validateMovie(movie) {
     const schema = {        
         title: Joi.string().min(1).required(),
@@ -40,3 +41,4 @@ function validateMovie(movie) {
 
 module.exports.Movie = Movie;
 module.exports.validateMovie = validateMovie;
+module.exports.movieSchema = movieSchema;

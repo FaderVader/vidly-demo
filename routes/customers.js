@@ -1,5 +1,5 @@
-const {Customer} = require('../models/customers')
-const {validate} = require('../models/customers')
+const {Customer} = require('../models/customer')
+const {validate} = require('../models/customer')
 const mongoose = require('mongoose');
 
 const express = require('express');
