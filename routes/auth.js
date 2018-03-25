@@ -13,8 +13,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     res.send('Nothing here');
 });
-
-
+ks
 
 router.post('/', async (req, res) => {
     const {error} = validate(req.body);    
@@ -29,9 +28,7 @@ router.post('/', async (req, res) => {
     const privateKey = await config.get('jwtPrivateKey');    
     const token = jwt.sign({_id: user._id}, privateKey); 
     res.send(token);
-
 });
-
 
 
 router.put('/:id', async (req, res) => {
@@ -39,10 +36,10 @@ router.put('/:id', async (req, res) => {
 });
 
 
-
 router.delete('/:id', async (req, res) => {
     res.send('Nothing here');
 });
+
 
 function validate(req) {
     const schema = {
