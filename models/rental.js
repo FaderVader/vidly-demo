@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
+
 const {Genre, genreSchema} = require('./genre');
 const {Customer, customerSchema} = require('./customer');
 const {Movie, movieSchema} = require('./movie');
@@ -59,13 +60,6 @@ const rentalSchema = new mongoose.Schema({
         type: Number,
         min: 0
     }
-
-    // movie: {type: movieSchema},
-    // customer: {
-    //     type: customerSchema,
-    //     required: true
-    // },
-    // numberOfDays: Number
 });
 
 const Rental = mongoose.model('Rental', rentalSchema);
@@ -73,8 +67,8 @@ const Rental = mongoose.model('Rental', rentalSchema);
 // validate the request
 function validateRental(rental) {
     const schema = {
-        movieId: Joi.string().required(),
-        customerId: Joi.string().required()        
+        movieId: Joi.objectId().required(),
+        customerId: Joi.objectId().required()        
     };
     return Joi.validate(rental, schema);
 };

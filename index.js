@@ -12,6 +12,8 @@ const genres = require('./routes/genres');
 const customers = require('./routes/customers');
 const movies = require('./routes/movies');
 const rentals = require('./routes/rentals');
+const logins = require('./routes/users');
+const auth = require('./routes/auth');
 const home = require('./routes/home');
 
 // declare and instantiate helper-apps
@@ -19,6 +21,7 @@ const Joi = require('joi');
 const config = require('config');
 const helmet = require('helmet');
 const morgan = require('morgan');
+Joi.objectId = require('joi-objectid')(Joi);
 
 // instantiate loggers and assign name-space
 const startupDebugger = require('debug')('app:startup');
@@ -26,7 +29,7 @@ const dbDebugger = require('debug')('app:db');
 
 // instantiate custom middleware
 const log = require('./middleware/logger');
-const auth = require('./middleware/authenticate');
+// const auth = require('./middleware/authenticate');
 
 // activate Pug middleware
 app.set('view engine', 'pug');
@@ -44,12 +47,21 @@ app.use('/api/genres', genres);  // all requests to [baseurl]/api/genres will be
 app.use('/api/customers', customers);
 app.use('/api/movies', movies);
 app.use('/api/rentals', rentals);
+app.use('/api/users', logins);
+app.use('/api/auth', auth);
 app.use('/', home);
 
 // Config
 console.log('Application name: ' + config.get('name'));
 console.log('Mail server: ' + config.get('mail.host'));
 console.log('Password: ' + config.get('mail.password'));
+
+if (!config.get('jwtPrivateKey')) {
+    console.log('Fatal error: jwtPrivateKey is not available in this environment');
+    process.exit(1);
+};
+console.log('private key: ' + config.get('jwtPrivateKey'));
+
 
 if (app.get('env')==='development') {
     app.use(morgan('tiny'));
