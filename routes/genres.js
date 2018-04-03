@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const {Genre, Customer, validate} = require('../models/genre');
+const authenticate = require('../middleware/authenticate');
+const checkAdmin = require('../middleware/admin');
 
 const express = require('express');
 const router = express.Router();
@@ -24,8 +26,9 @@ router.get('/:id', async (req, res) => {
 });
 
 // CREATE / POST
-router.post('/', async (req, res) => {
-    console.log(req.body.name);
+router.post('/', authenticate, async (req, res) => {
+    console.log('@ genres.js, POST:' + req.body.name);
+    
     const {error} = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -48,7 +51,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE / DELETE
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [authenticate, checkAdmin], async (req, res) => {
     const genre = await Genre.findByIdAndRemove(req.params.id)        
     if (!genre) return res.status(404).send('Genre not found');
 

@@ -29,7 +29,6 @@ const dbDebugger = require('debug')('app:db');
 
 // instantiate custom middleware
 const log = require('./middleware/logger');
-// const auth = require('./middleware/authenticate');
 
 // activate Pug middleware
 app.set('view engine', 'pug');
